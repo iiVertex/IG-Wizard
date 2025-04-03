@@ -7,10 +7,11 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-  "build": "tailwindcss -i ./src/input.css -o ./src/output.css"
-},
+    "build": "tailwindcss -i ./src/input.css -o ./src/output.css"
+  },
   "dependencies": {
-    "@tailwindcss/cli": "^4.0.15"
+    "@tailwindcss/cli": "^4.0.15",
+    "@vercel/speed-insights": "^1.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
