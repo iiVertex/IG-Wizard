@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG Wizard | About Us</title> 
+    <link rel="icon" type="image/x-icon" href="./images/logo.png">
+    <link rel="preload" href="./images/logo.png" as="image">
+    <link rel="preload" href="./css + js files/style.css" as="style">
+    <link rel="stylesheet" href="./css + js files/style.css">
+    <link rel="stylesheet" href="../src/output.css">
+</head>
+<body class="text-white">
+    <!-- Navbar -->
+    <nav class="bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Title -->
+                <a href="index.html" class="flex items-center space-x-3">
+                    <img src="./images/logo.png" alt="IG Wizard Logo" class="h-8 w-8">
+                    <span class="text-lg font-semibold">IG Wizard</span>
+                </a>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button" class="md:hidden text-white hover:text-blue-400">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <!-- Navigation Links with dropdown menu -->
+                <div id="nav-links" class="hidden md:flex md:space-x-4">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Past Papers dropdown - Improved version -->
+                    <div class="relative group">
+                        <button class="nav-link hover:text-blue-400 flex items-center" aria-label="Menu"> 
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <!-- Add padding-top to create an invisible bridge between button and dropdown -->
+                        <div class="absolute left-0 hidden group-hover:block pt-2 z-50">
+                            <div class="bg-black bg-opacity-80 backdrop-blur-lg p-2 rounded shadow-lg w-40">
+                                <a href="igcse.html" class="block py-2 px-3 hover:bg-gray-900 hover:text-blue-400 rounded">IGCSE</a>
+                                <a href="comingsoon.html" class="block py-2 px-3 hover:bg-gray-900 hover:text-blue-400 rounded">IAL</a>
+                                <a href="gcse.html" class="block py-2 px-3 hover:bg-gray-900 hover:text-blue-400 rounded">GCSE</a>
+                                <a href="al.html" class="block py-2 px-3 hover:bg-gray-900 hover:text-blue-400 rounded">AL</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-blue-400 hover:underline">Contact Us</a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Mobile Past Papers dropdown -->
+                    <div class="mobile-dropdown">
+                        <button id="mobile-papers-dropdown" class="flex justify-between items-center w-full nav-link hover:text-blue-400">
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="mobile-papers-menu" class="hidden pl-4 mt-2 space-y-2">
+                            <a href="igcse.html" class="block py-1 hover:text-blue-400">IGCSE</a>
+                            <a href="comingsoon.html" class="block py-1 hover:text-blue-400">IAL</a>
+                            <a href="gcse.html" class="block py-1 hover:text-blue-400">GCSE</a>
+                            <a href="al.html" class="block py-1 hover:text-blue-400">AL</a>
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-blue-400 hover:underline">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 container mx-auto px-6 pb-12">
+        <!-- About Us Section -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Hero Section - Fixed title color and improved spacing -->
+            <div class="text-center mb-24">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-white">Our Mission</h1>
+                <p class="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto mb-6">
+                    Empowering students to achieve academic excellence through accessible, high-quality educational resources and cutting-edge AI technology.
+                </p>
+            </div>
+
+            <!-- Our Story Section -->
+            <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-8 mb-12 border border-gray-800 border-opacity-50 shadow-xl">
+                <h2 class="text-3xl font-bold mb-6 text-blue-400">Our Story</h2>
+                <div class="prose prose-lg prose-invert max-w-none">
+                    <p class="mb-4">
+                        IG Wizard began with a simple observation: students everywhere were struggling to find organized, comprehensive resources for their IGCSE and International A-Level exams.
+                    </p>
+                    <p class="mb-4">
+                        Founded by a team of educators and technology enthusiasts in 2022, we set out to create a platform that would make exam preparation easier, more efficient, and more accessible for students worldwide.
+                    </p>
+                    <p>
+                        What started as a simple past paper repository has evolved into a comprehensive educational platform featuring AI tutoring, organized study materials, and a supportive community of learners.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Our Values Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <!-- Value 1 -->
+                <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-30">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-900 rounded-full p-3 mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Accessibility</h3>
+                    </div>
+                    <p class="text-gray-300">We believe quality education should be accessible to all students, regardless of their location or background.</p>
+                </div>
+                
+                <!-- Value 2 -->
+                <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-30">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-900 rounded-full p-3 mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Innovation</h3>
+                    </div>
+                    <p class="text-gray-300">We constantly explore new technologies to enhance the learning experience and make studying more effective.</p>
+                </div>
+                
+                <!-- Value 3 -->
+                <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-30">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-900 rounded-full p-3 mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Community</h3>
+                    </div>
+                    <p class="text-gray-300">We foster a supportive community where students can learn from each other and grow together academically.</p>
+                </div>
+                
+                <!-- Value 4 -->
+                <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-30">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-900 rounded-full p-3 mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Excellence</h3>
+                    </div>
+                    <p class="text-gray-300">We strive for excellence in everything we do, from content curation to platform development and user experience.</p>
+                </div>
+            </div>
+
+            <!-- Get in Touch Section -->
+            <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-xl p-8 text-center">
+                <h2 class="text-2xl font-bold mb-4">Get in Touch</h2>
+                <p class="mb-6 text-gray-200">Have questions or suggestions? We'd love to hear from you!</p>
+                <a href="#" class="inline-block bg-white text-blue-900 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Contact Us</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-70 backdrop-filter backdrop-blur-lg mt-16 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <!-- Copyright Section -->
+            <div class="text-center text-sm text-gray-400">
+                <p>© 2025 IG Wizard. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js + css files/script.js"></script>
+</body>
+</html>

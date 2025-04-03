@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG Wizard | Home</title> 
+    <link rel="icon" type="image/x-icon" href="./images/logo.png">
+    <link rel="preload" href="./images/logo.png" as="image">
+    <link rel="preload" href="./css + js files/style.css" as="style">
+    <link rel="stylesheet" href="./css + js files/style.css">
+    <link rel="stylesheet" href="../src/output.css">
+</head>
+<body class="text-white">
+    <!-- Navbar -->
+    <nav class="bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Title -->
+                <a href="index.html" class="flex items-center space-x-3">
+                    <img src="./images/logo.png" alt="IG Wizard Logo" class="h-8 w-8">
+                    <span class="text-lg font-semibold">IG Wizard</span>
+                </a>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button" class="md:hidden text-white hover:text-blue-400">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <!-- Navigation Links with dropdown menu -->
+                <div id="nav-links" class="hidden md:flex md:space-x-4">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Past Papers dropdown - Improved version -->
+                    <div class="relative group">
+                        <button class="nav-link hover:text-blue-400 flex items-center" aria-label="Menu"> 
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <!-- Add padding-top to create an invisible bridge between button and dropdown -->
+                        <div class="absolute left-0 hidden group-hover:block pt-2 z-50">
+                            <div class="bg-black bg-opacity-80 backdrop-blur-lg p-2 rounded shadow-lg w-40">
+                                <a href="igcse.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">IGCSE</a>
+                                <a href="comingsoon.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">IAL</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-blue-400 hover:underline">Contact Us</a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Mobile Past Papers dropdown -->
+                    <div class="mobile-dropdown">
+                        <button id="mobile-papers-dropdown" class="flex justify-between items-center w-full nav-link hover:text-blue-400">
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="mobile-papers-menu" class="hidden pl-4 mt-2 space-y-2">
+                            <a href="igcse.html" class="block py-1 hover:text-blue-400">IGCSE</a>
+                            <a href="comingsoon.html" class="block py-1 hover:text-blue-400">IAL</a>
+                            
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-blue-400 hover:underline">Contact Us</a>
+                </div>
+            </div>
+            </div>
+
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Mobile Past Papers dropdown -->
+                    <div class="mobile-dropdown">
+                        <button id="mobile-papers-dropdown" class="flex justify-between items-center w-full nav-link hover:text-blue-400">
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="mobile-papers-menu" class="hidden pl-4 mt-2 space-y-2">
+                            <a href="igcse.html" class="block py-1 hover:text-blue-400">IGCSE</a>
+                            <a href="comingsoon.html" class="block py-1 hover:text-blue-400">IAL</a>
+                            
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-blue-400 hover:underline">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Updated Space-Themed Hero Section -->
+    <div class="hero relative py-32 bg-black">
+        <!-- Space-themed background elements -->
+        <div class="absolute inset-0 z-0">
+            <!-- Star field background -->
+            <div class="w-full h-full opacity-30" 
+                 style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Cg fill=%22%23FFF%22%3E%3Ccircle cx=%2210%22 cy=%2275%22 r=%221%22/%3E%3Ccircle cx=%2285%22 cy=%2230%22 r=%220.5%22/%3E%3Ccircle cx=%2240%22 cy=%2255%22 r=%220.7%22/%3E%3Ccircle cx=%2260%22 cy=%2220%22 r=%220.8%22/%3E%3Ccircle cx=%2225%22 cy=%228%22 r=%220.4%22/%3E%3Ccircle cx=%2270%22 cy=%2285%22 r=%220.6%22/%3E%3Ccircle cx=%2290%22 cy=%2270%22 r=%220.3%22/%3E%3Ccircle cx=%2215%22 cy=%2230%22 r=%220.5%22/%3E%3Ccircle cx=%2295%22 cy=%225%22 r=%220.2%22/%3E%3Ccircle cx=%2235%22 cy=%2295%22 r=%220.4%22/%3E%3Ccircle cx=%228%22 cy=%2250%22 r=%220.3%22/%3E%3C/g%3E%3C/svg%3E');
+                   background-size: 300px 300px;">
+            </div>
+            
+            <!-- Space nebula effects -->
+            <div class="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-blue-600 filter blur-[120px] opacity-15 animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/3 w-96 h-96 rounded-full bg-indigo-800 filter blur-[150px] opacity-10"></div>
+            <div class="absolute top-1/3 right-1/4 w-60 h-60 rounded-full bg-purple-700 filter blur-[100px] opacity-5 animate-pulse-slow"></div>
+        </div>
+        
+        <!-- Orbital ring decoration -->
+        <div class="absolute inset-0 z-0 overflow-hidden opacity-10">
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-96 border border-blue-400 rounded-full rotate-12"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[130%] h-80 border border-indigo-500 rounded-full -rotate-8"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="container relative z-10 mx-auto px-6 text-center">
+            <!-- Tag line with space theme -->
+            <div class="inline-block mb-6">
+                <span class="text-xs uppercase tracking-[0.25em] font-medium text-blue-400">Navigate Your Educational Universe</span>
+            </div>
+            
+            <!-- Modern heading with space theme -->
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-white">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">Ace your exams</span> with IG Wizard
+            </h1>
+            
+            <!-- Clean description -->
+            <p class="text-gray-300 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed font-light">
+                Access thousands of past papers, get instant AI tutoring, and study smarter with our comprehensive educational tools.
+            </p>
+            
+            <!-- Space-themed buttons -->
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="pastpapers.html" class="group inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-8 py-3 rounded-md hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 font-medium">
+                    Browse Past Papers
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+                <a href="aiassistant.html" class="group inline-flex items-center justify-center bg-transparent backdrop-blur-sm border border-indigo-500 border-opacity-50 text-white px-8 py-3 rounded-md hover:bg-indigo-900 hover:bg-opacity-20 transition-all duration-300 font-medium">
+                    Try AI Tutor
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Space-themed stats -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-2 gap-4 text-center max-w-3xl mx-auto border-t border-indigo-900 pt-10">
+                <div>
+                    <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">10K+</div>
+                    <div class="text-blue-300 text-opacity-70 text-sm">Past Papers</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400">24/7</div>
+                    <div class="text-blue-300 text-opacity-70 text-sm">AI Assistance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Features Section -->
+    <div class="container mx-auto p-8 mt-16">
+        <!-- Why Choose Section - Fixed layout for third card centering -->
+        <section>
+            <h2 class="text-3xl font-semibold mb-8 text-center">Key Features</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Past Papers Card -->
+                <div class="card p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-center">
+                        <div class="w-24 h-24 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-3">Past Papers</h3>
+                    <p class="text-gray-300 text-center">Find the most recent past papers for a variety of subjects, organized by year and exam session.</p>
+                </div>
+
+                <!-- Student Hub Card -->
+                <div class="card p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-center">
+                        <div class="w-24 h-24 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-3">Student Hub</h3>
+                    <p class="text-gray-300 text-center">Student Hub curates the best Reddit posts, top student advice, and essential resources to help you ace your exams.</p>
+                </div>
+
+                <!-- AI Integration Card - Center on tablet screens (sm but not md) -->
+                <div class="card p-6 rounded-lg shadow-lg sm:col-span-2 md:col-span-1 sm:max-w-sm sm:mx-auto md:max-w-none md:mx-0">
+                    <div class="flex justify-center">
+                        <div class="w-24 h-24 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-3">AI Integration</h3>
+                    <p class="text-gray-300 text-center">Get instant answers to your questions with our advanced AI tutoring system.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Testimonials -->
+        <section class="mt-16">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Student Success Stories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- First testimonial -->
+                <div class="card p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-center mb-4">
+                        <img src="./images/dinho.jpg" alt="Student" class="h-16 w-16 rounded-full object-cover">
+                    </div>
+                    <p class="text-gray-300 italic">"IG Wizard's past papers collection helped me practice extensively for my IGCSE exams. I achieved all A*s!"</p>
+                    <p class="text-blue-400 mt-4 font-semibold">- Sarah, IGCSE Student</p>
+                </div>
+                
+                <!-- Second testimonial -->
+                <div class="card p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-center mb-4">
+                        <img src="./images/dinho.jpg" alt="Student" class="h-16 w-16 rounded-full object-cover">
+                    </div>
+                    <p class="text-gray-300 italic">"The AI tutor answered all my questions instantly, even late at night before my exam. It was like having a teacher available 24/7."</p>
+                    <p class="text-blue-400 mt-4 font-semibold">- James, A-Level Student</p>
+                </div>
+                
+                <!-- Third testimonial - centered on medium screens -->
+                <div class="card p-6 rounded-lg shadow-lg md:col-span-2 lg:col-span-1 md:max-w-sm md:mx-auto lg:max-w-none lg:mx-0">
+                    <div class="flex justify-center mb-4">
+                        <img src="./images/dinho.jpg" alt="Student" class="h-16 w-16 rounded-full object-cover">
+                    </div>
+                    <p class="text-gray-300 italic">"Finding organized past papers for all my subjects in one place saved me so much time. IG Wizard is an essential resource!"</p>
+                    <p class="text-blue-400 mt-4 font-semibold">- Maya, IGCSE Student</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Call to Action
+    <div class="bg-blue-900 bg-opacity-30 py-16 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to boost your exam performance?</h2>
+            <p class="text-xl mb-8">Join thousands of students who are already using IG Wizard to ace their exams.</p>
+            <a href="pastpapers.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300">Get Started Now</a>
+        </div>
+    </div> -->
+
+    <!-- FAQ Section -->
+    <div class="mb-16 mt-16">
+        <h2 class="text-3xl font-bold mb-8 text-center text-white">Frequently Asked Questions</h2>
+        
+        <div class="space-y-6 max-w-3xl mx-auto">
+            <!-- FAQ Item 1 -->
+            <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-50 shadow-xl">
+                <h3 class="text-xl font-semibold mb-3">How can I access past papers?</h3>
+                <p class="text-gray-300">Past papers are available in our dedicated section. Simply navigate to "Past Papers" in the menu, select your exam board (IGCSE or IAL), then browse by subject to find the papers you need.</p>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-50 shadow-xl">
+                <h3 class="text-xl font-semibold mb-3">Is the AI Tutor free to use?</h3>
+                <p class="text-gray-300">Yes, our AI Tutor is currently free to use for all users. We believe in making quality education accessible to everyone. Simply navigate to the AI Tutor section and start asking questions.</p>
+            </div>
+            
+            <!-- FAQ Item 3 -->
+            <div class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-md rounded-xl p-6 border border-gray-800 border-opacity-50 shadow-xl">
+                <h3 class="text-xl font-semibold mb-3">Do you offer resources for subjects other than sciences?</h3>
+                <p class="text-gray-300">Absolutely! While we started with science subjects, we now offer resources for a wide range of subjects including Mathematics, English, History, Geography, Economics, and more. We're constantly expanding our library.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - Fixed Version -->
+    <footer class="bg-black bg-opacity-70 backdrop-filter backdrop-blur-lg mt-16 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <!-- Footer Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="./images/logo.png" alt="IG Wizard Logo" class="h-8 w-8 mr-2">
+                        <h3 class="text-lg font-semibold">IG Wizard</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Your comprehensive exam preparation platform with past papers, AI tutoring, and study resources for IGCSE, GCSE, and A-Level students.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-400" alt="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400" alt="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400" alt="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><a href="index.html" class="hover:text-blue-400">Home</a></li>
+                        <li><a href="aiassistant.html" class="hover:text-blue-400">AI Tutor</a></li>
+                        <li><a href="pastpapers.html" class="hover:text-blue-400">Past Papers</a></li>
+                        <li><a href="contactus.html" class="hover:text-blue-400">Contact Us</a></li>
+                        <li><a href="aboutus.html" class="hover:text-blue-400">About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><a href="igcse.html" class="hover:text-blue-400">IGCSE</a></li>
+                        <li><a href="comingsoon.html" class="hover:text-blue-400">IAL</a></li>
+                        
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <p class="text-gray-400 text-sm mb-2">Email: support@igwizard.com</p>
+                    <p class="text-gray-400 text-sm">Phone: +123 456 7890</p>
+                </div>
+            </div>
+            
+            <!-- Copyright Section -->
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>© 2025 IG Wizard. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+<script src="./css + js files/script.js" defer></script>
+</html>
