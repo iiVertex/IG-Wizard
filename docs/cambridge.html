@@ -83,7 +83,29 @@
     <main class="pt-24 container mx-auto px-6">
         <div class="text-center mb-12">
             <h1 class="text-3xl font-bold mb-4">Cambridge Subjects</h1>
-            <p class="text-xl text-gray-300">Here you can find Edexcel IGCSE Subjects and access a variety of resources to test your abilities and improve your grades!</p>
+            <p class="text-xl text-gray-300">Here you can find Cambridge IGCSE Subjects and access a variety of resources to test your abilities and improve your grades!</p>
+        </div>
+
+        <!-- Subject Category Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mt-4 mb-12">
+            <button id="filter-all" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors active">
+                All Subjects
+            </button>
+            <button id="filter-stem" class="px-4 py-2 rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors">
+                STEM
+            </button>
+            <button id="filter-technology" class="px-4 py-2 rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors">
+                Technology
+            </button>
+            <button id="filter-languages" class="px-4 py-2 rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors">
+                Languages
+            </button>
+            <button id="filter-humanities" class="px-4 py-2 rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors">
+                Humanities
+            </button>
+            <button id="filter-commerce" class="px-4 py-2 rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors">
+                Commerce
+            </button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
@@ -461,14 +483,14 @@
                         </div>
                         <div>
                             <h2 class="text-2xl font-bold">Business</h2>
-                            <p class="text-gray-300"></p>
+                            <p class="text-gray-300">0450 / 7115</p>
                         </div>
                     </div>
                     <div class="flex space-x-4">
                         <a href="./specs/0450.pdf" 
                            target="_blank"
                            class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">Specification</a>
-                        <a href="#" 
+                        <a href="businesscambridge.html" 
                            class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">Past Papers</a>
                     </div>
                 </div>
@@ -543,5 +565,67 @@
             </div>
         </div>
     </footer>
-<script src="script.js" defer></script></body>
+    <script src="script.js"></script>
+    <script>
+    // Subject filtering functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Define subject categories
+        const categories = {
+            'stem': ['Mathematics', 'Chemistry', 'Physics', 'Biology'],
+            'languages': ['English 1st Language', 'English 2nd Language', 'Arabic'],
+            'humanities': ['History', 'Geography', 'Environmental Management'],
+            'commerce': ['Business', 'Economics'],
+            'technology': ['Computer Science', 'ICT']
+        };
+        
+        // Get all subject cards
+        const subjectCards = document.querySelectorAll('.card');
+        
+        // Get all filter buttons
+        const filterButtons = document.querySelectorAll('[id^="filter-"]');
+        
+        // Add click event to each filter button
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-blue-600');
+                    btn.classList.add('bg-gray-800');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active', 'bg-blue-600');
+                this.classList.remove('bg-gray-800');
+                
+                // Get the filter category from button ID
+                const filterCategory = this.id.replace('filter-', '');
+                
+                // Show all cards if "All Subjects" is clicked
+                if (filterCategory === 'all') {
+                    subjectCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                    return;
+                }
+                
+                // Get the subjects in the selected category
+                const subjectsInCategory = categories[filterCategory] || [];
+                
+                // Filter the cards
+                subjectCards.forEach(card => {
+                    const subjectTitle = card.querySelector('h2').textContent.trim();
+                    if (subjectsInCategory.includes(subjectTitle)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Set "All Subjects" as active by default
+        document.getElementById('filter-all').classList.add('active');
+    });
+    </script>
+</body>
 </html>
