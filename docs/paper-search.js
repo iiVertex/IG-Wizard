@@ -14,6 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create or update the paper database
     updatePaperDatabase();
+
+    // Only add the button on the pastpapers.html page
+    if (window.location.href.includes('pastpapers.html') || 
+        window.location.href.includes('igcse.html') || 
+        window.location.href.includes('edexcel.html') || 
+        window.location.href.includes('cambridge.html')) {
+        
+        const container = document.querySelector('.container');
+        if (container) {
+            const buttonDiv = document.createElement('div');
+            buttonDiv.className = 'mt-8 text-center';
+            
+            buttonDiv.appendChild(button);
+            container.appendChild(buttonDiv);
+        }
+    }
 });
 
 // Initialize search UI components
@@ -161,6 +177,34 @@ function updatePaperDatabase() {
             ci: link.querySelector('[href*="ci_"]')?.href || ''
         };
         
+        // Normalize URLs to be relative
+        Object.keys(links).forEach(key => {
+            if (links[key]) {
+                // Step 1: Convert to absolute URL if it's relative to get a clean starting point
+                let url = new URL(links[key], window.location.href).href;
+                
+                // Step 2: Remove the origin to make it relative to the site root
+                url = url.replace(window.location.origin + '/', '');
+                
+                // Step 3: Remove any duplicate 'docs/' prefixes
+                while (url.startsWith('docs/docs/')) {
+                    url = url.replace('docs/docs/', 'docs/');
+                }
+                
+                // Step 4: Ensure there's only one 'docs/' at the beginning if needed
+                if (!url.startsWith('docs/') && !url.startsWith('http')) {
+                    // Only add docs/ if this is a relative URL to our site, not an external link
+                    url = 'docs/' + url;
+                }
+                
+                // Step 5: Remove any duplicate slashes
+                url = url.replace(/\/+/g, '/');
+                
+                // Update the URL
+                links[key] = url;
+            }
+        });
+        
         // Create search keywords
         const keywords = [
             title.toLowerCase(),
@@ -207,6 +251,250 @@ function updatePaperDatabase() {
     localStorage.setItem('paperDbLastUpdate', new Date().toISOString());
     
     console.log(`Paper database updated with ${papers.length} ${subject} papers`);
+}
+
+// Create a comprehensive database of all papers across all subjects
+function createComprehensivePaperDatabase() {
+    console.log('Starting to build comprehensive paper database...');
+    
+    // Define all subject pages
+    const subjectPages = [
+        { page: 'phycambridge.html', examBoard: 'cambridge' },
+        { page: 'biocambridge.html', examBoard: 'cambridge' },
+        { page: 'chemcambridge.html', examBoard: 'cambridge' },
+        { page: 'mathcambridge.html', examBoard: 'cambridge' },
+        { page: 'cscambridge.html', examBoard: 'cambridge' },
+        { page: 'ictcambridge.html', examBoard: 'cambridge' },
+        { page: 'econcambridge.html', examBoard: 'cambridge' },
+        { page: 'businesscambridge.html', examBoard: 'cambridge' },
+        { page: 'arabicambridge.html', examBoard: 'cambridge' },
+        { page: 'engfirstcambridge.html', examBoard: 'cambridge' },
+        { page: 'evmcambridge.html', examBoard: 'cambridge' },
+        { page: 'geographycambridge.html', examBoard: 'cambridge' },
+        { page: 'historycambridge.html', examBoard: 'cambridge' },
+        { page: 'biologyedexcel.html', examBoard: 'edexcel' },
+        { page: 'chemistryedexcel.html', examBoard: 'edexcel' },
+        { page: 'physicsedexcel.html', examBoard: 'edexcel' },
+        { page: 'mathedexcel.html', examBoard: 'edexcel' }
+    ];
+    
+    // Clear the existing database
+    localStorage.removeItem('paperDatabase');
+    
+    // Initialize empty database
+    let allPapers = [];
+    
+    // Function to clean URLs to prevent double "docs/" issues
+    function cleanUrl(url) {
+        if (!url) return '';
+        
+        // Strip the domain if it exists
+        let cleanedUrl = url.replace(/^(https?:\/\/[^\/]+)/, '');
+        
+        // Remove leading slash
+        if (cleanedUrl.startsWith('/')) {
+            cleanedUrl = cleanedUrl.substring(1);
+        }
+        
+        // Fix the double docs/ issue - this is the key part
+        while (cleanedUrl.includes('docs/docs/')) {
+            cleanedUrl = cleanedUrl.replace('docs/docs/', 'docs/');
+        }
+        
+        // If URL is relative and doesn't start with docs/
+        if (!cleanedUrl.startsWith('docs/') && 
+            !cleanedUrl.startsWith('http') && 
+            !cleanedUrl.startsWith('/')) {
+            // We want all relative URLs to start with a single docs/ prefix
+            cleanedUrl = 'docs/' + cleanedUrl;
+        }
+        
+        // Remove any double slashes (except in http://)
+        cleanedUrl = cleanedUrl.replace(/([^:])\/+/g, '$1/');
+        
+        return cleanedUrl;
+    }
+    
+    // Function to process each page
+    function processPage(pageIndex) {
+        if (pageIndex >= subjectPages.length) {
+            // All pages processed, save the database
+            localStorage.setItem('paperDatabase', JSON.stringify(allPapers));
+            localStorage.setItem('paperDbLastUpdate', new Date().toISOString());
+            console.log(`Comprehensive paper database created with ${allPapers.length} papers across ${subjectPages.length} subjects.`);
+            alert(`Paper database created with ${allPapers.length} papers!`);
+            return;
+        }
+        
+        const pageInfo = subjectPages[pageIndex];
+        const page = pageInfo.page;
+        const examBoard = pageInfo.examBoard;
+        
+        console.log(`Processing page ${pageIndex + 1}/${subjectPages.length}: ${page} (${examBoard})`);
+        
+        // Load the page content
+        fetch(page)
+            .then(response => response.text())
+            .then(html => {
+                // Create a DOM parser
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extract subject from page
+                let subject = page.replace('cambridge.html', '').replace('edexcel.html', '');
+                if (subject.includes('phy')) subject = 'Physics';
+                else if (subject.includes('bio')) subject = 'Biology';
+                else if (subject.includes('chem')) subject = 'Chemistry';
+                else if (subject.includes('math')) subject = 'Mathematics';
+                else if (subject.includes('cs')) subject = 'Computer Science';
+                else if (subject.includes('ict')) subject = 'ICT';
+                else if (subject.includes('econ')) subject = 'Economics';
+                else if (subject.includes('business')) subject = 'Business';
+                else if (subject.includes('arabic')) subject = 'Arabic'; // This is already correct
+                else if (subject.includes('engfirst')) subject = 'English First Language';
+                else if (subject.includes('evm')) subject = 'Environmental Management';
+                else if (subject.includes('geography')) subject = 'Geography';
+                else if (subject.includes('history')) subject = 'History';
+                
+                // Get all paper links from the page
+                const paperLinks = doc.querySelectorAll('.paper-link');
+                
+                // Process each paper link
+                paperLinks.forEach(link => {
+                    // Get the title (Paper X Variant Y)
+                    const titleElement = link.querySelector('span');
+                    if (!titleElement) return;
+                    
+                    const title = titleElement.textContent.trim();
+                    
+                    // Get the session (May/June 2023, etc.)
+                    const sectionElement = link.closest('div').parentElement;
+                    const sessionElement = sectionElement.querySelector('.text-blue-400');
+                    const session = sessionElement ? sessionElement.textContent.trim() : '';
+                    
+                    // Extract paper metadata
+                    const paperMatch = title.match(/Paper (\d+)( Variant (\d+))?/i);
+                    if (!paperMatch) return;
+                    
+                    const paperNumber = paperMatch[1];
+                    const variant = paperMatch[3] || '1';  // Default to variant 1 if not specified
+                    
+                    // Extract year
+                    const yearMatch = session.match(/\d{4}/);
+                    const year = yearMatch ? yearMatch[0] : '';
+                    
+                    // Get exam session
+                    let examSession = '';
+                    if (session.includes('May') || session.includes('June')) examSession = 'Summer';
+                    else if (session.includes('Oct') || session.includes('Nov')) examSession = 'Winter';
+                    else if (session.includes('Feb') || session.includes('Mar')) examSession = 'Spring';
+                    else if (session.includes('Jan')) examSession = 'Winter';
+                    
+                    // Collect all link elements within the paper link
+                    const qpElement = link.querySelector('.text-blue-400');
+                    const msElement = link.querySelector('.text-green-400');
+                    const gbElement = link.querySelector('.text-yellow-400');
+                    const ciElement = link.querySelector('[href*="ci_"]');
+                    const sfElement = link.querySelector('[href*="sf_"]');
+                    const inElement = link.querySelector('[href*="in_"]');
+                    
+                    // Get URLs and clean them properly
+                    const links = {
+                        qp: qpElement ? qpElement.getAttribute('href') || '' : '',
+                        ms: msElement ? msElement.getAttribute('href') || '' : '',
+                        gb: gbElement ? gbElement.getAttribute('href') || '' : '',
+                        ci: ciElement ? ciElement.getAttribute('href') || '' : '',
+                        sf: sfElement ? sfElement.getAttribute('href') || '' : '',
+                        in: inElement ? inElement.getAttribute('href') || '' : ''
+                    };
+
+                    // Clean all URLs
+                    Object.keys(links).forEach(key => {
+                        if (links[key]) {
+                            // Get the raw href attribute value
+                            let url = links[key];
+                            
+                            // If it's a relative URL that doesn't start with a slash
+                            if (!url.startsWith('/') && !url.startsWith('http')) {
+                                // Make sure it has only one docs/ prefix 
+                                if (url.startsWith('docs/')) {
+                                    // URL already has docs/ prefix, make sure it's not duplicated
+                                    while (url.includes('docs/docs/')) {
+                                        url = url.replace('docs/docs/', 'docs/');
+                                    }
+                                } else {
+                                    // URL doesn't have docs/ prefix, add it
+                                    url = 'docs/' + url;
+                                }
+                            }
+                            
+                            // Fix any protocol-relative URLs
+                            if (url.startsWith('//')) {
+                                url = 'https:' + url;
+                            }
+                            
+                            // Remove any duplicate slashes
+                            url = url.replace(/([^:])\/+/g, '$1/');
+                            
+                            links[key] = url;
+                        }
+                    });
+                    
+                    // Debug the links
+                    console.log(`Paper ${title} links:`, links);
+                    
+                    // Add exam board to keywords
+                    const examBoardName = examBoard === 'cambridge' ? 'Cambridge' : 'Edexcel';
+                    
+                    // Create search keywords
+                    const keywords = [
+                        title.toLowerCase(),
+                        session.toLowerCase(),
+                        `paper ${paperNumber}`,
+                        `p${paperNumber}`,
+                        variant ? `variant ${variant}` : '',
+                        variant ? `v${variant}` : '',
+                        year,
+                        examSession.toLowerCase(),
+                        subject.toLowerCase(),
+                        examBoard.toLowerCase(),
+                        examBoardName.toLowerCase()
+                    ].filter(Boolean);
+                    
+                    // Create paper object
+                    const paper = {
+                        id: `${examBoard}_${subject.toLowerCase()}_p${paperNumber}_v${variant}_${year}`,
+                        title: title,
+                        session: session,
+                        subject: subject,
+                        paperNumber: paperNumber,
+                        variant: variant,
+                        year: year,
+                        examSession: examSession,
+                        examBoard: examBoard,
+                        keywords: keywords.join(' '),
+                        links: links,
+                        sourcePage: page
+                    };
+                    
+                    // Add to database
+                    allPapers.push(paper);
+                });
+                
+                console.log(`Found ${paperLinks.length} papers on ${page}`);
+                
+                // Process next page
+                processPage(pageIndex + 1);
+            })
+            .catch(error => {
+                console.error(`Error loading ${page}:`, error);
+                // Continue with next page
+                processPage(pageIndex + 1);
+            });
+    }
+    
+    // Start processing pages
+    processPage(0);
 }
 
 // Search the database for matching papers
@@ -437,4 +725,62 @@ function debounce(func, wait) {
             func.apply(context, args);
         }, wait);
     };
+}
+
+// Function to fix double docs/ in existing database
+function fixDatabaseUrls() {
+    console.log('Fixing database URLs...');
+    
+    // Get the existing database
+    const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
+    if (papers.length === 0) {
+        console.log('No database found to fix.');
+        return;
+    }
+    
+    let fixCount = 0;
+    
+    // Go through each paper and fix its links
+    papers.forEach(paper => {
+        if (paper.links) {
+            Object.keys(paper.links).forEach(key => {
+                if (paper.links[key]) {
+                    const originalUrl = paper.links[key];
+                    
+                    // Fix the URL
+                    let fixedUrl = originalUrl;
+                    
+                    // Remove duplicate docs/ prefixes
+                    while (fixedUrl.includes('docs/docs/')) {
+                        fixedUrl = fixedUrl.replace('docs/docs/', 'docs/');
+                        fixCount++;
+                    }
+                    
+                    // Fix any other path issues
+                    if (fixedUrl.startsWith('//') && !fixedUrl.startsWith('http')) {
+                        fixedUrl = fixedUrl.substring(1);
+                        fixCount++;
+                    }
+                    
+                    // Clean any excess slashes
+                    fixedUrl = fixedUrl.replace(/([^:])\/+/g, '$1/');
+                    
+                    // Update the link
+                    paper.links[key] = fixedUrl;
+                    
+                    // Log fixed URLs for debugging
+                    if (originalUrl !== fixedUrl) {
+                        console.log(`Fixed URL: ${originalUrl} -> ${fixedUrl}`);
+                    }
+                }
+            });
+        }
+    });
+    
+    // Save the fixed database
+    localStorage.setItem('paperDatabase', JSON.stringify(papers));
+    localStorage.setItem('paperDbLastUpdate', new Date().toISOString());
+    
+    console.log(`Fixed ${fixCount} URLs in the database.`);
+    return fixCount;
 }

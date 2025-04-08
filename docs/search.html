@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG Wizard | Advanced Paper Search</title> 
+    <link rel="icon" type="image/x-icon" href="./images/logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="output.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .paper-card {
+            transition: transform 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateY(-4px);
+        }
+        .filter-dropdown {
+            background-color: #1a1a2e;
+            color: white;
+            border: 1px solid #2a2a3a;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            width: 100%;
+        }
+        .filter-dropdown option {
+            background-color: #1a1a2e;
+        }
+        .text-qp { color: #60a5fa; }
+        .text-ms { color: #34d399; }
+        .text-gt { color: #fbbf24; }
+        .text-ci { color: #c084fc; }
+        .text-sf { color: #f87171; }
+        .text-in { color: #38bdf8; }
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.5em;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .badge-blue { background-color: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-green { background-color: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge-yellow { background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-purple { background-color: rgba(139, 92, 246, 0.2); color: #c084fc; }
+        #no-results-message, #loading-message, #build-db-message {
+            text-align: center;
+            padding: 2rem;
+            color: #9ca3af;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Navbar -->
+    <nav class="bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Title -->
+                <a href="index.html" class="flex items-center space-x-3">
+                    <img src="./images/logo.png" alt="IGWizard Logo" class="h-10">
+                    <span class="text-xl font-bold">IG Wizard</span>
+                </a>
+                
+                <!-- Navigation Links with dropdown menu -->
+                <div id="nav-links" class="hidden md:flex md:space-x-4">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Past Papers dropdown - Improved version -->
+                    <div class="relative group">
+                        <button class="nav-link hover:text-blue-400 flex items-center" aria-label="Menu"> 
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <!-- Add padding-top to create an invisible bridge between button and dropdown -->
+                        <div class="absolute left-0 hidden group-hover:block pt-2 z-50">
+                            <div class="bg-black bg-opacity-80 backdrop-blur-lg p-2 rounded shadow-lg w-40">
+                                <a href="igcse.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">IGCSE</a>
+                                <a href="comingsoon.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">IAL</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-blue-400 hover:underline">Contact Us</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+                    
+                    <!-- Mobile Past Papers dropdown -->
+                    <div class="mobile-dropdown">
+                        <button id="mobile-papers-dropdown" class="flex justify-between items-center w-full nav-link text-blue-400">
+                            Past Papers
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="mobile-papers-menu" class="pl-4 mt-2 space-y-2">
+                            <a href="igcse.html" class="block py-1 hover:text-blue-400">IGCSE</a>
+                            <a href="comingsoon.html" class="block py-1 hover:text-blue-400">IAL</a>
+                        </div>
+                    </div>
+                    
+                    <a href="aboutus.html" class="nav-link hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="nav-link hover:text-blue-400">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 container mx-auto px-6 pb-12">
+        <h1 class="text-3xl font-bold mb-3 text-center">Advanced Past Paper Search</h1>
+        <p class="text-gray-300 text-center mb-8">Search our comprehensive database of past papers across all subjects and exam sessions</p>
+        
+        <div id="database-status" class="mb-8"></div>
+        
+        <div class="card p-6 rounded-lg mb-8">
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <div class="relative hidden">
+                    <input type="text" id="search-input" class="w-full p-4 pl-12 bg-black bg-opacity-50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search for past papers (e.g. physics paper 2, biology 2023, chemistry variant 3)">
+                </div>
+            </div>
+            
+            <!-- Filter Controls -->
+            <div class="search-filters mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Subject</label>
+                    <select id="filter-subject" class="filter-dropdown">
+                        <option value="">All Subjects</option>
+                        <!-- Will be populated by JS -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Year</label>
+                    <select id="filter-year" class="filter-dropdown">
+                        <option value="">All Years</option>
+                        <!-- Will be populated by JS -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Paper Number</label>
+                    <select id="filter-paper" class="filter-dropdown">
+                        <option value="">All Papers</option>
+                        <option value="1">Paper 1</option>
+                        <option value="2">Paper 2</option>
+                        <option value="3">Paper 3</option>
+                        <option value="4">Paper 4</option>
+                        <option value="5">Paper 5</option>
+                        <option value="6">Paper 6</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Variant</label>
+                    <select id="filter-variant" class="filter-dropdown">
+                        <option value="">All Variants</option>
+                        <option value="1">Variant 1</option>
+                        <option value="2">Variant 2</option>
+                        <option value="3">Variant 3</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Session</label>
+                    <select id="filter-session" class="filter-dropdown">
+                        <option value="">All Sessions</option>
+                        <option value="Summer">May/June</option>
+                        <option value="Winter">Oct/Nov</option>
+                        <option value="Spring">Feb/March</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Exam Board</label>
+                    <select id="filter-examboard" class="filter-dropdown">
+                        <option value="">All Boards</option>
+                        <option value="cambridge">Cambridge</option>
+                        <option value="edexcel">Edexcel</option>
+                    </select>
+                </div>
+                <!-- <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-1">Resources</label>
+                    <select id="filter-resources" class="filter-dropdown">
+                        <option value="">Any Resources</option>
+                        <option value="qp">Question Papers</option>
+                        <option value="ms">Mark Schemes</option>
+                        <option value="gb">Grade Boundaries</option>
+                        <option value="ci">Confidential Instructions</option>
+                    </select>
+                </div> -->
+            </div>
+            
+            <!-- Actions Row -->
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex space-x-2 mb-4 md:mb-0">
+                    <button id="clear-filters" class="px-4 py-2 border border-gray-700 rounded-md hover:bg-gray-800 hover:border-gray-600 transition-colors">
+                        Clear Filters
+                    </button>
+                    <button id="refresh-db" class="px-4 py-2 border border-blue-700 text-blue-400 rounded-md hover:bg-blue-900 hover:bg-opacity-30 transition-colors">
+                        Refresh Database
+                    </button>
+                </div>
+                <div class="flex items-center">
+                    <label class="flex items-center cursor-pointer hidden">
+                        <input type="checkbox" id="group-by-subject" class="mr-2">
+                        <span class="text-sm text-gray-300">Group by subject</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Stats -->
+        <div id="results-stats" class="stats-bar hidden">
+            <div id="result-count"></div>
+            <div id="result-time"></div>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="search-results" class="result-grid">
+            <div id="build-db-message">
+                <p class="mb-4">No paper database found. Build a comprehensive database to enable advanced search features.</p>
+                <button id="build-db-button" class="btn-primary px-6 py-3 rounded-md transition-all duration-300 font-medium">
+                    Build Comprehensive Paper Database
+                </button>
+            </div>
+        </div>
+        
+        <div id="loading-message" class="hidden">
+            <svg class="animate-spin h-8 w-8 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p>Loading papers...</p>
+        </div>
+        
+        <div id="no-results-message" class="hidden">
+            <p>No papers found matching your search criteria.</p>
+            <p class="text-sm mt-2">Try adjusting your filters or search terms.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-70 py-6">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-400">&copy; 2024 IG Wizard. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="aboutus.html" class="text-gray-400 hover:text-blue-400">About Us</a>
+                    <a href="contactus.html" class="text-gray-400 hover:text-blue-400">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-blue-400">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="paper-search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobilePapersDropdown = document.getElementById('mobile-papers-dropdown');
+            const mobilePapersMenu = document.getElementById('mobile-papers-menu');
+            
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            mobilePapersDropdown.addEventListener('click', () => {
+                mobilePapersMenu.classList.toggle('hidden');
+            });
+            
+            // Initialize advanced paper search
+            initAdvancedPaperSearch();
+            
+            function initAdvancedPaperSearch() {
+                // DOM elements
+                const searchInput = document.getElementById('search-input');
+                const filterSubject = document.getElementById('filter-subject');
+                const filterYear = document.getElementById('filter-year');
+                const filterPaper = document.getElementById('filter-paper');
+                const filterVariant = document.getElementById('filter-variant');
+                const filterSession = document.getElementById('filter-session');
+                const filterExamBoard = document.getElementById('filter-examboard');
+                const clearFiltersBtn = document.getElementById('clear-filters');
+                const refreshDbBtn = document.getElementById('refresh-db');
+                const searchResults = document.getElementById('search-results');
+                const buildDbMessage = document.getElementById('build-db-message');
+                const buildDbButton = document.getElementById('build-db-button');
+                const loadingMessage = document.getElementById('loading-message');
+                const noResultsMessage = document.getElementById('no-results-message');
+                const resultsStats = document.getElementById('results-stats');
+                const resultCount = document.getElementById('result-count');
+                const resultTime = document.getElementById('result-time');
+                const groupBySubject = document.getElementById('group-by-subject');
+                const databaseStatus = document.getElementById('database-status');
+                
+                // Check database status
+                const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
+                const lastUpdate = localStorage.getItem('paperDbLastUpdate');
+                
+                if (papers.length === 0) {
+                    // No database, show build message
+                    searchResults.innerHTML = '';
+                    buildDbMessage.style.display = 'block';
+                    updateDatabaseStatus(0, null);
+                } else {
+                    // Database exists, initialize filters and show paper count
+                    buildDbMessage.style.display = 'none';
+                    initializeFilters(papers);
+                    searchPapers();
+                    updateDatabaseStatus(papers.length, lastUpdate);
+                }
+                
+                // Event listeners
+                searchInput.addEventListener('input', debounce(searchPapers, 300));
+                filterSubject.addEventListener('change', searchPapers);
+                filterYear.addEventListener('change', searchPapers);
+                filterPaper.addEventListener('change', searchPapers);
+                filterVariant.addEventListener('change', searchPapers);
+                filterSession.addEventListener('change', searchPapers);
+                filterExamBoard.addEventListener('change', searchPapers);
+                groupBySubject.addEventListener('change', searchPapers);
+                
+                clearFiltersBtn.addEventListener('click', clearFilters);
+                refreshDbBtn.addEventListener('click', refreshDatabase);
+                buildDbButton.addEventListener('click', buildDatabase);
+                
+                // Initialize filter dropdowns
+                function initializeFilters(papers) {
+                    // Extract unique values for each filter
+                    const subjects = [...new Set(papers.map(p => p.subject))].sort();
+                    const years = [...new Set(papers.map(p => p.year))].sort().reverse();
+                    
+                    // Populate subject dropdown
+                    filterSubject.innerHTML = '<option value="">All Subjects</option>';
+                    subjects.forEach(subject => {
+                        const option = document.createElement('option');
+                        option.value = subject;
+                        option.textContent = subject;
+                        filterSubject.appendChild(option);
+                    });
+                    
+                    // Populate year dropdown
+                    filterYear.innerHTML = '<option value="">All Years</option>';
+                    years.forEach(year => {
+                        const option = document.createElement('option');
+                        option.value = year;
+                        option.textContent = year;
+                        filterYear.appendChild(option);
+                    });
+                }
+                
+                // Search papers based on filters
+                function searchPapers() {
+                    const startTime = performance.now();
+                    
+                    // Get all papers
+                    const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
+                    if (papers.length === 0) {
+                        buildDbMessage.style.display = 'block';
+                        searchResults.innerHTML = '';
+                        return;
+                    }
+                    
+                    // Show loading state
+                    loadingMessage.classList.remove('hidden');
+                    searchResults.innerHTML = '';
+                    noResultsMessage.classList.add('hidden');
+                    resultsStats.classList.add('hidden');
+                    
+                    // Get filter values
+                    const query = searchInput.value.trim().toLowerCase();
+                    const subjectFilter = filterSubject.value;
+                    const yearFilter = filterYear.value;
+                    const paperFilter = filterPaper.value;
+                    const variantFilter = filterVariant.value;
+                    const sessionFilter = filterSession.value;
+                    const examBoardFilter = filterExamBoard.value;
+                    const groupResults = groupBySubject.checked;
+                    
+                    // Apply filters
+                    let filteredPapers = papers.filter(paper => {
+                        // Search query
+                        if (query && !paper.keywords.includes(query)) return false;
+                        
+                        // Subject filter
+                        if (subjectFilter && paper.subject !== subjectFilter) return false;
+                        
+                        // Year filter
+                        if (yearFilter && paper.year !== yearFilter) return false;
+                        
+                        // Paper number filter
+                        if (paperFilter && paper.paperNumber !== paperFilter) return false;
+                        
+                        // Variant filter
+                        if (variantFilter && paper.variant !== variantFilter) return false;
+                        
+                        // Session filter
+                        if (sessionFilter && paper.examSession !== sessionFilter) return false;
+                        
+                        // Exam board filter
+                        if (examBoardFilter && paper.examBoard !== examBoardFilter) return false;
+                        
+                        return true;
+                    });
+                    
+                    // Sort papers by subject, year, paper, variant
+                    filteredPapers.sort((a, b) => {
+                        // Sort by year (descending)
+                        if (a.year !== b.year) return b.year - a.year;
+                        
+                        // Then by subject
+                        if (a.subject !== b.subject) return a.subject.localeCompare(b.subject);
+                        
+                        // Then by session (summer first, then winter, then spring)
+                        const sessionOrder = { "Summer": 0, "Winter": 1, "Spring": 2 };
+                        if (a.examSession !== b.examSession) 
+                            return sessionOrder[a.examSession] - sessionOrder[b.examSession];
+                        
+                        // Then by paper number
+                        if (a.paperNumber !== b.paperNumber) return a.paperNumber - b.paperNumber;
+                        
+                        // Finally by variant
+                        return a.variant - b.variant;
+                    });
+                    
+                    // Hide loading state
+                    loadingMessage.classList.add('hidden');
+                    
+                    // Show results count
+                    const endTime = performance.now();
+                    const searchTime = ((endTime - startTime) / 1000).toFixed(3);
+                    resultCount.textContent = `${filteredPapers.length} papers found`;
+                    resultTime.textContent = `in ${searchTime} seconds`;
+                    resultsStats.classList.remove('hidden');
+                    
+                    // Display results
+                    if (filteredPapers.length === 0) {
+                        noResultsMessage.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    // Group by subject if requested
+                    if (groupResults) {
+                        const subjectGroups = {};
+                        filteredPapers.forEach(paper => {
+                            if (!subjectGroups[paper.subject]) {
+                                subjectGroups[paper.subject] = [];
+                            }
+                            subjectGroups[paper.subject].push(paper);
+                        });
+                        
+                        // Create a container for the results
+                        const resultsContainer = document.createElement('div');
+                        resultsContainer.className = 'w-full';
+                        
+                        // Display each subject group
+                        Object.keys(subjectGroups).sort().forEach(subject => {
+                            // Subject header
+                            const subjectHeader = document.createElement('h2');
+                            subjectHeader.className = 'text-xl font-bold mt-6 mb-3 text-blue-400';
+                            subjectHeader.textContent = subject;
+                            resultsContainer.appendChild(subjectHeader);
+                            
+                            // Papers for this subject
+                            const paperGrid = document.createElement('div');
+                            paperGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6';
+                            
+                            subjectGroups[subject].forEach(paper => {
+                                paperGrid.appendChild(createPaperCard(paper));
+                            });
+                            
+                            resultsContainer.appendChild(paperGrid);
+                        });
+                        
+                        searchResults.appendChild(resultsContainer);
+                    } else {
+                        // Regular display without grouping
+                        filteredPapers.forEach(paper => {
+                            searchResults.appendChild(createPaperCard(paper));
+                        });
+                    }
+                }
+                
+                // Create a card for a paper
+                function createPaperCard(paper) {
+                    const card = document.createElement('div');
+                    card.className = 'paper-card card p-4 rounded-lg';
+                    
+                    // Paper header with title and subject
+                    const header = document.createElement('div');
+                    header.className = 'mb-2';
+                    
+                    // Title
+                    const title = document.createElement('h3');
+                    title.className = 'text-lg font-bold';
+                    title.textContent = paper.title;
+                    header.appendChild(title);
+                    
+                    // Subject & Session
+                    const subjectSession = document.createElement('div');
+                    subjectSession.className = 'flex justify-between text-sm text-gray-400';
+                    
+                    const subject = document.createElement('span');
+                    subject.textContent = paper.subject;
+                    subjectSession.appendChild(subject);
+                    
+                    const session = document.createElement('span');
+                    session.textContent = paper.session;
+                    subjectSession.appendChild(session);
+                    
+                    header.appendChild(subjectSession);
+                    card.appendChild(header);
+                    
+                    // Paper resources
+                    const resources = document.createElement('div');
+                    resources.className = 'mt-3 space-y-2';
+                    
+                    // Resource badges
+                    const badges = document.createElement('div');
+                    badges.className = 'flex flex-wrap';
+                    
+                    if (paper.examSession) {
+                        const sessionBadge = document.createElement('span');
+                        sessionBadge.className = 'badge badge-blue';
+                        sessionBadge.textContent = paper.examSession;
+                        badges.appendChild(sessionBadge);
+                    }
+                    
+                    if (paper.year) {
+                        const yearBadge = document.createElement('span');
+                        yearBadge.className = 'badge badge-green';
+                        yearBadge.textContent = paper.year;
+                        badges.appendChild(yearBadge);
+                    }
+                    
+                    if (paper.examBoard) {
+                        const boardBadge = document.createElement('span');
+                        boardBadge.className = 'badge badge-purple';
+                        boardBadge.textContent = paper.examBoard === 'cambridge' ? 'Cambridge' : 'Edexcel';
+                        badges.appendChild(boardBadge);
+                    }
+                    
+                    resources.appendChild(badges);
+                    
+                    // Resource links
+                    const links = document.createElement('div');
+                    links.className = 'flex flex-wrap gap-2 mt-3';
+                    
+                    if (paper.links.qp) {
+                        const qpLink = createResourceLink(paper.links.qp, 'QP', 'text-qp');
+                        links.appendChild(qpLink);
+                    }
+                    
+                    if (paper.links.ms) {
+                        const msLink = createResourceLink(paper.links.ms, 'MS', 'text-ms');
+                        links.appendChild(msLink);
+                    }
+                    
+                    if (paper.links.gb) {
+                        const gbLink = createResourceLink(paper.links.gb, 'GB', 'text-gt');
+                        links.appendChild(gbLink);
+                    }
+                    
+                    if (paper.links.ci) {
+                        const ciLink = createResourceLink(paper.links.ci, 'CI', 'text-ci');
+                        links.appendChild(ciLink);
+                    }
+                    
+                    if (paper.links.sf) {
+                        const sfLink = createResourceLink(paper.links.sf, 'SF', 'text-sf');
+                        links.appendChild(sfLink);
+                    }
+                    
+                    if (paper.links.in) {
+                        const inLink = createResourceLink(paper.links.in, 'IN', 'text-in');
+                        links.appendChild(inLink);
+                    }
+                    
+                    resources.appendChild(links);
+                    card.appendChild(resources);
+                    
+                    return card;
+                }
+                
+                // Create a resource link button
+                function createResourceLink(href, text, className) {
+                    const link = document.createElement('a');
+                    
+                    // Fix URL path issues - SIMPLE FIX: REMOVE THE "docs/" PREFIX
+                    if (href && href.startsWith('docs/')) {
+                        href = href.substring(5); // Remove "docs/" prefix completely
+                    }
+                    
+                    link.href = href;
+                    link.className = `px-3 py-1 rounded border ${className} border-current hover:bg-opacity-20 hover:bg-current transition-colors`;
+                    link.textContent = text;
+                    link.target = '_blank';
+                    return link;
+                }
+                
+                // Clear all filters
+                function clearFilters() {
+                    searchInput.value = '';
+                    filterSubject.value = '';
+                    filterYear.value = '';
+                    filterPaper.value = '';
+                    filterVariant.value = '';
+                    filterSession.value = '';
+                    filterExamBoard.value = '';
+                    groupBySubject.checked = false;
+                    searchPapers();
+                }
+                
+                // Build comprehensive database
+                function buildDatabase() {
+                    buildDbMessage.style.display = 'none';
+                    loadingMessage.classList.remove('hidden');
+                    
+                    // Call the existing function from paper-search.js
+                    createComprehensivePaperDatabase();
+                    
+                    // Check periodically if database is built
+                    const checkInterval = setInterval(() => {
+                        const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
+                        const lastUpdate = localStorage.getItem('paperDbLastUpdate');
+                        
+                        if (papers.length > 0) {
+                            clearInterval(checkInterval);
+                            loadingMessage.classList.add('hidden');
+                            initializeFilters(papers);
+                            searchPapers();
+                            updateDatabaseStatus(papers.length, lastUpdate);
+                        }
+                    }, 1000);
+                }
+                
+                // Refresh the database
+                function refreshDatabase() {
+                    if (confirm('This will rebuild the entire paper database. Continue?')) {
+                        localStorage.removeItem('paperDatabase');
+                        localStorage.removeItem('paperDbLastUpdate');
+                        buildDatabase();
+                    }
+                }
+                
+                // Update the database status display
+                function updateDatabaseStatus(paperCount, lastUpdate) {
+                    let statusHtml = '';
+                    
+                    if (paperCount === 0) {
+                        statusHtml = `
+                            <div class="bg-blue-900 bg-opacity-30 border border-blue-800 text-blue-300 p-4 rounded-lg">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">
+                                            No paper database found. Please build the database to enable search functionality.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const formattedDate = new Date(lastUpdate).toLocaleString();
+                        statusHtml = `
+                            <div class="bg-green-900 bg-opacity-30 border border-green-800 text-green-300 p-4 rounded-lg">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">
+                                            Database contains ${paperCount} papers from across all subjects.
+                                            <span class="text-xs ml-2">Last updated: ${formattedDate}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    databaseStatus.innerHTML = statusHtml;
+                }
+            }
+            
+            // Debounce function to limit how often a function is called
+            function debounce(func, wait) {
+                let timeout;
+                return function(...args) {
+                    const context = this;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(context, args), wait);
+                };
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
