@@ -62,3 +62,30 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     // Reset the form
     this.reset();
 });
+
+//Analytics
+// Load Vercel Analytics
+const loadAnalytics = async () => {
+    const analyticsScript = document.createElement('script');
+    analyticsScript.type = 'module';
+    analyticsScript.innerHTML = `
+      import { inject } from 'https://cdn.vercel.com/analytics/v1/script.js';
+      inject();
+    `;
+    document.body.appendChild(analyticsScript);
+    
+    const insightsScript = document.createElement('script');
+    insightsScript.type = 'module';
+    insightsScript.innerHTML = `
+      import { injectSpeedInsights } from 'https://cdn.vercel.com/speed-insights/vitals.js';
+      injectSpeedInsights();
+    `;
+    document.body.appendChild(insightsScript);
+  };
+  
+  // Call the function when the page is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadAnalytics);
+  } else {
+    loadAnalytics();
+  }
