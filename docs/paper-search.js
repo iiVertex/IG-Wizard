@@ -253,6 +253,69 @@ function updatePaperDatabase() {
     console.log(`Paper database updated with ${papers.length} ${subject} papers`);
 }
 
+// Update the database status display
+function updateDatabaseStatus(paperCount, lastUpdate) {
+    let statusHtml = '';
+    
+    if (paperCount === 0) {
+        // Database not built yet - show setup prompt
+        statusHtml = `
+            <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-blue-800 bg-opacity-50 p-2 rounded-full">
+                            <svg class="h-6 w-6 text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-white">Database Setup Required</h3>
+                            <p class="mt-1 text-sm text-blue-200">
+                                Please initialize the paper database to enable advanced search functionality.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        // Database is built - show stats
+        const formattedDate = new Date(lastUpdate).toLocaleString();
+        statusHtml = `
+            <div class="bg-gradient-to-r from-green-900 to-teal-900 rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-green-800 bg-opacity-50 p-2 rounded-full">
+                            <svg class="h-6 w-6 text-green-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <div class="flex items-baseline">
+                                <h3 class="text-lg font-medium text-white">Database Ready</h3>
+                                <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-green-800 text-green-100">
+                                    ${paperCount} papers
+                                </span>
+                            </div>
+                            <p class="mt-1 text-sm text-green-200">
+                                Full search functionality is available. Last updated: ${formattedDate}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-green-800 bg-opacity-30 px-6 py-2">
+                    <div class="text-xs text-green-200 flex justify-between">
+                        <span>Use the filters below to find papers</span>
+                        <span>Cambridge & Edexcel papers available</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    databaseStatus.innerHTML = statusHtml;
+}
+
 // Create a comprehensive database of all papers across all subjects
 function createComprehensivePaperDatabase() {
     console.log('Starting to build comprehensive paper database...');
