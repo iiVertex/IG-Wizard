@@ -330,7 +330,7 @@ function createComprehensivePaperDatabase() {
         { page: 'ictcambridge.html', examBoard: 'cambridge' },
         { page: 'econcambridge.html', examBoard: 'cambridge' },
         { page: 'businesscambridge.html', examBoard: 'cambridge' },
-        { page: 'arabicambridge.html', examBoard: 'cambridge' },
+        { page: 'arabiccambridge.html', examBoard: 'cambridge' },
         { page: 'engfirstcambridge.html', examBoard: 'cambridge' },
         { page: 'evmcambridge.html', examBoard: 'cambridge' },
         { page: 'geographycambridge.html', examBoard: 'cambridge' },
