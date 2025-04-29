@@ -10,6 +10,7 @@
     <link rel="preload" href="style.css" as="style">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="output.css">
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.28/bundled/lenis.min.js"></script>
 </head>
 <body class="text-white">
     <!-- Navbar -->
@@ -372,5 +373,28 @@
     window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
     </script>
     <script src="script.js" defer></script>
+    <!-- Initialize Lenis for smooth scrolling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lenis smooth scrolling
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                smoothTouch: false,
+                touchMultiplier: 2
+            });
+    
+            // Bind lenis smooth scroll to window
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            
+            requestAnimationFrame(raf);
+        });
+    </script>
 </body>
 </html>
