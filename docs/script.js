@@ -50,42 +50,48 @@ document.querySelectorAll('.paper-link').forEach(link => {
         link.classList.remove('bg-opacity-20', 'bg-blue-500');
     });
 });
-document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // You would typically send the form data to your server here
-    // For now, we'll just show a success message
-    
-    const name = document.getElementById('name').value;
-    alert(`Thanks for reaching out, ${name}! We'll get back to you soon.`);
-    
-    // Reset the form
-    this.reset();
-});
+
+// Contact Form Submission Handler - Add a check for the form's existence
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // You would typically send the form data to your server here
+        // For now, we'll just show a success message
+        
+        const nameInput = document.getElementById('name');
+        const name = nameInput ? nameInput.value : 'there'; // Handle if name input also doesn't exist
+        alert(`Thanks for reaching out, ${name}! We'll get back to you soon.`);
+        
+        // Reset the form
+        this.reset();
+    });
+}
 
 //Analytics
 // Load Vercel Analytics
-const loadAnalytics = async () => {
-    const analyticsScript = document.createElement('script');
-    analyticsScript.type = 'module';
-    analyticsScript.innerHTML = `
-      import { inject } from 'https://cdn.vercel.com/analytics/v1/script.js';
-      inject();
-    `;
-    document.body.appendChild(analyticsScript);
+// const loadAnalytics = async () => {
+//     const analyticsScript = document.createElement('script');
+//     analyticsScript.type = 'module';
+//     analyticsScript.innerHTML = `
+//       import { inject } from 'https://cdn.vercel.com/analytics/v1/script.js';
+//       inject();
+//     `;
+//     document.body.appendChild(analyticsScript);
     
-    const insightsScript = document.createElement('script');
-    insightsScript.type = 'module';
-    insightsScript.innerHTML = `
-      import { injectSpeedInsights } from 'https://cdn.vercel.com/speed-insights/vitals.js';
-      injectSpeedInsights();
-    `;
-    document.body.appendChild(insightsScript);
-  };
+//     const insightsScript = document.createElement('script');
+//     insightsScript.type = 'module';
+//     insightsScript.innerHTML = `
+//       import { injectSpeedInsights } from 'https://cdn.vercel.com/speed-insights/vitals.js';
+//       injectSpeedInsights();
+//     `;
+//     document.body.appendChild(insightsScript);
+//   };
   
-  // Call the function when the page is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadAnalytics);
-  } else {
-    loadAnalytics();
-  }
+//   // Call the function when the page is loaded
+//   if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', loadAnalytics);
+//   } else {
+//     loadAnalytics();
+//   }
