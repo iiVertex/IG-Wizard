@@ -413,7 +413,7 @@ function createComprehensivePaperDatabase() {
                 else if (subject.includes('ict')) subject = 'ICT';
                 else if (subject.includes('econ')) subject = 'Economics';
                 else if (subject.includes('business')) subject = 'Business';
-                else if (subject.includes('arabic')) subject = 'Arabic'; // This is already correct
+                else if (subject.includes('arabic')) subject = 'Arabic';
                 else if (subject.includes('engfirst')) subject = 'English First Language';
                 else if (subject.includes('evm')) subject = 'Environmental Management';
                 else if (subject.includes('geography')) subject = 'Geography';
