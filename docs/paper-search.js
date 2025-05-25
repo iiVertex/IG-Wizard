@@ -1,3 +1,8 @@
+// Add these debugging functions at the top of your file
+function logDebug(message) {
+  console.log(`[Paper DB] ${message}`);
+}
+
 // Main search functionality
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Initializing paper search...');
@@ -318,15 +323,16 @@ function updateDatabaseStatus(paperCount, lastUpdate) {
 
 // Create a comprehensive database of all papers across all subjects
 function createComprehensivePaperDatabase() {
-    console.log('Starting to build comprehensive paper database...');
+    logDebug('Building comprehensive paper database...');
     
-    // Define all subject pages
+    // Geography might be missing from this array - ensure it's included
     const subjectPages = [
         { page: 'phycambridge.html', examBoard: 'cambridge' },
         { page: 'biocambridge.html', examBoard: 'cambridge' },
         { page: 'chemcambridge.html', examBoard: 'cambridge' },
         { page: 'mathcambridge.html', examBoard: 'cambridge' },
         { page: 'cscambridge.html', examBoard: 'cambridge' },
+        { page: 'geographycambridge.html', examBoard: 'cambridge' },
         { page: 'ictcambridge.html', examBoard: 'cambridge' },
         { page: 'econcambridge.html', examBoard: 'cambridge' },
         { page: 'businesscambridge.html', examBoard: 'cambridge' },
@@ -405,7 +411,13 @@ function createComprehensivePaperDatabase() {
                 
                 // Extract subject from page
                 let subject = page.replace('cambridge.html', '').replace('edexcel.html', '');
-                if (subject.includes('phy')) subject = 'Physics';
+                logDebug(`Processing page: ${page}, extracted: ${subject}`);
+                
+                // Check for geography FIRST before other subjects that might match part of the word
+                if (subject.includes('geography')) {
+                    subject = 'Geography'; // Move this condition UP before shorter matches
+                }
+                else if (subject.includes('phy')) subject = 'Physics';
                 else if (subject.includes('bio')) subject = 'Biology';
                 else if (subject.includes('chem')) subject = 'Chemistry';
                 else if (subject.includes('math')) subject = 'Mathematics';
