@@ -154,6 +154,26 @@
         
         <div id="database-status" class="mb-8"></div>
         
+        <!-- New Geography Papers Added Alert -->
+        <div id="geography-alert" class="relative bg-indigo-900 bg-opacity-40 border border-indigo-700 text-indigo-200 p-4 rounded-lg mb-8 transition-all duration-300 transform">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-300 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg> -->
+                    <div>
+                        <p class="font-medium">Cambridge IGCSE Geography Past Papers Added!</p>
+                        <p class="text-sm mt-1 text-indigo-300">We've recently added a complete collection of Geography papers to our database.</p>
+                    </div>
+                </div>
+                <button id="dismiss-geography" class="text-indigo-300 hover:text-white focus:outline-none ml-4 transition-all duration-300 transform hover:scale-110" aria-label="Dismiss">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
         <div class="card p-6 rounded-lg mb-8">
             <!-- Search Bar -->
             <div class="mb-6">
@@ -334,6 +354,8 @@
                 const resultTime = document.getElementById('result-time');
                 const groupBySubject = document.getElementById('group-by-subject');
                 const databaseStatus = document.getElementById('database-status');
+                const geographyAlert = document.getElementById('geography-alert');
+                const dismissGeography = document.getElementById('dismiss-geography');
                 
                 // Check database status
                 const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
@@ -365,6 +387,15 @@
                 clearFiltersBtn.addEventListener('click', clearFilters);
                 refreshDbBtn.addEventListener('click', refreshDatabase);
                 buildDbButton.addEventListener('click', buildDatabase);
+                dismissGeography.addEventListener('click', () => {
+                    geographyAlert.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        geographyAlert.style.display = 'none';
+                    }, 300); // Match with transition duration
+                    
+                    // Save to localStorage so it stays dismissed
+                    localStorage.setItem('geography-alert-dismissed', 'true');
+                });
                 
                 // Initialize filter dropdowns
                 function initializeFilters(papers) {
