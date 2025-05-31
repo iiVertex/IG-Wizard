@@ -152,7 +152,7 @@
         <h1 class="text-3xl font-bold mb-3 text-center">Advanced Past Paper Search</h1>
         <p class="text-gray-300 text-center mb-8">Search our comprehensive database of past papers across all subjects and exam sessions</p>
         
-        <div id="database-status" class="mb-8 text-center"></div>
+        
         
         <!-- New Accounting Papers Added Alert - Blue Theme -->
         <div id="accounting-alert" class="relative bg-blue-600 text-center bg-opacity-20 border border-blue-100 text-blue-200 p-4 rounded-lg mb-8 shadow-lg transition-all duration-300 transform">
@@ -180,6 +180,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="database-status" class="mb-8 text-center m-auto"></div>
         
         <div class="card p-6 rounded-lg mb-8">
             <!-- Search Bar -->
@@ -729,7 +731,7 @@
                     if (paperCount === 0) {
                         statusHtml = `
                             <div class="bg-blue-900 bg-opacity-30 border border-blue-800 text-blue-300 p-4 rounded-lg">
-                                <div class="flex items-start">
+                                <div class="flex items-center justify-center">
                                     <div class="flex-shrink-0">
                                         <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -746,8 +748,8 @@
                     } else {
                         const formattedDate = new Date(lastUpdate).toLocaleString();
                         statusHtml = `
-                            <div class="bg-green-900 bg-opacity-30 border border-green-800 text-green-300 p-4 rounded-lg">
-                                <div class="flex items-start">
+                            <div class="bg-green-900 bg-opacity-30 text-green-300 p-4 rounded-lg">
+                                <div class="flex items-center justify-center">
                                     <div class="flex-shrink-0">
                                         <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
