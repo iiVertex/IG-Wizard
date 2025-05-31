@@ -341,6 +341,7 @@ function createComprehensivePaperDatabase() {
         { page: 'evmcambridge.html', examBoard: 'cambridge' },
         { page: 'geographycambridge.html', examBoard: 'cambridge' },
         { page: 'historycambridge.html', examBoard: 'cambridge' },
+        { page: 'accountingcambridge.html', examBoard: 'cambridge' },
         { page: 'biologyedexcel.html', examBoard: 'edexcel' },
         { page: 'chemistryedexcel.html', examBoard: 'edexcel' },
         { page: 'physicsedexcel.html', examBoard: 'edexcel' },
@@ -418,6 +419,7 @@ function createComprehensivePaperDatabase() {
                     subject = 'Geography'; // Move this condition UP before shorter matches
                 }
                 else if (subject.includes('phy')) subject = 'Physics';
+                else if (subject.includes('accounting')) subject = 'Accounting';
                 else if (subject.includes('bio')) subject = 'Biology';
                 else if (subject.includes('chem')) subject = 'Chemistry';
                 else if (subject.includes('math')) subject = 'Mathematics';
