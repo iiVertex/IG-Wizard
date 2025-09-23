@@ -19,6 +19,44 @@
     <link rel="stylesheet" href="output.css">
     <!-- <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.28/bundled/lenis.min.js"></script> -->
     <!-- <script src="https://app.rybbit.io/api/script.js" data-site-id="23" defer></script> -->
+    
+    <!-- Fix navbar overflow for very small screens (320px-423px) -->
+    <style>
+        @media (max-width: 423px) and (min-width: 320px) {
+            /* Force navbar to stay within viewport bounds */
+            nav.fixed {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Remove container constraints that cause overflow */
+            nav .container.mx-auto {
+                max-width: none !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Ensure flex content doesn't overflow */
+            nav .flex.justify-between {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Prevent any horizontal scrolling */
+            html, body {
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+        }
+    </style>
 </head>
 <body class="text-white overflow-x-hidden home-page">
     <!-- Navbar -->
