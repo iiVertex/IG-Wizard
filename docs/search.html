@@ -151,7 +151,7 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" name="button">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -220,21 +220,21 @@
             <div class="search-filters mb-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Subject</label>
-                    <select id="filter-subject" class="filter-dropdown">
+                    <select id="filter-subject" class="filter-dropdown" name="subject">
                         <option value="">All Subjects</option>
                         <!-- Will be populated by JS -->
                     </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Year</label>
-                    <select id="filter-year" class="filter-dropdown">
+                    <select id="filter-year" class="filter-dropdown" name="subject">
                         <option value="">All Years</option>
                         <!-- Will be populated by JS -->
                     </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Paper Number</label>
-                    <select id="filter-paper" class="filter-dropdown">
+                    <select id="filter-paper" class="filter-dropdown" name="number>
                         <option value="">All Papers</option>
                         <option value="1">Paper 1</option>
                         <option value="2">Paper 2</option>
@@ -246,7 +246,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Variant</label>
-                    <select id="filter-variant" class="filter-dropdown">
+                    <select id="filter-variant" class="filter-dropdown" name="variant">
                         <option value="">All Variants</option>
                         <option value="1">Variant 1</option>
                         <option value="2">Variant 2</option>
@@ -255,7 +255,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Session</label>
-                    <select id="filter-session" class="filter-dropdown">
+                    <select id="filter-session" class="filter-dropdown" name="session>
                         <option value="">All Sessions</option>
                         <option value="Summer">May/June</option>
                         <option value="Winter">Oct/Nov</option>
@@ -264,7 +264,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Exam Board</label>
-                    <select id="filter-examboard" class="filter-dropdown">
+                    <select id="filter-examboard" class="filter-dropdown" name="exam board">
                         <option value="">All Boards</option>
                         <option value="cambridge">Cambridge</option>
                         <option value="edexcel">Edexcel</option>
@@ -291,6 +291,12 @@
                     <button id="refresh-db" class="px-4 py-2 border border-blue-700 text-blue-400 rounded-md hover:bg-blue-900 hover:bg-opacity-30 transition-colors">
                         Refresh Database
                     </button>
+                </div>
+                <div class="flex items-center">
+                    <label class="flex items-center cursor-pointer hidden">
+                        <input type="checkbox" id="group-by-subject" class="mr-2">
+                        <span class="text-sm text-gray-300">Group by subject</span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -725,23 +731,53 @@
                 
                 // Build comprehensive database
                 function buildDatabase() {
+                    console.log('Starting database build...');
                     buildDbMessage.style.display = 'none';
                     loadingMessage.classList.remove('hidden');
                     
-                    // Call the existing function from paper-search.js
-                    createComprehensivePaperDatabase();
+                    try {
+                        // Check if the function exists
+                        if (typeof createComprehensivePaperDatabase === 'function') {
+                            console.log('Calling createComprehensivePaperDatabase...');
+                            createComprehensivePaperDatabase();
+                        } else {
+                            console.error('createComprehensivePaperDatabase function not found!');
+                            alert('Error: Database build function not found. Please check if paper-search.js is loaded correctly.');
+                            loadingMessage.classList.add('hidden');
+                            buildDbMessage.style.display = 'block';
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('Error calling createComprehensivePaperDatabase:', error);
+                        alert('Error building database: ' + error.message);
+                        loadingMessage.classList.add('hidden');
+                        buildDbMessage.style.display = 'block';
+                        return;
+                    }
                     
                     // Check periodically if database is built
+                    let checkCount = 0;
+                    const maxChecks = 30; // 30 seconds max
                     const checkInterval = setInterval(() => {
+                        checkCount++;
+                        console.log(`Checking database build progress... (${checkCount}/${maxChecks})`);
+                        
                         const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
                         const lastUpdate = localStorage.getItem('paperDbLastUpdate');
                         
                         if (papers.length > 0) {
+                            console.log(`Database built successfully with ${papers.length} papers!`);
                             clearInterval(checkInterval);
                             loadingMessage.classList.add('hidden');
                             initializeFilters(papers);
                             searchPapers();
                             updateDatabaseStatus(papers.length, lastUpdate);
+                        } else if (checkCount >= maxChecks) {
+                            console.error('Database build timeout - no papers found after 30 seconds');
+                            clearInterval(checkInterval);
+                            loadingMessage.classList.add('hidden');
+                            buildDbMessage.style.display = 'block';
+                            alert('Database build timed out. Please try again or check the console for errors.');
                         }
                     }, 1000);
                 }
@@ -749,9 +785,15 @@
                 // Refresh the database
                 function refreshDatabase() {
                     if (confirm('This will rebuild the entire paper database. Continue?')) {
+                        console.log('User confirmed database refresh');
+                        console.log('Clearing existing database...');
                         localStorage.removeItem('paperDatabase');
                         localStorage.removeItem('paperDbLastUpdate');
+                        localStorage.removeItem('accounting-alert-dismissed'); // Reset alert too
+                        console.log('Starting fresh database build...');
                         buildDatabase();
+                    } else {
+                        console.log('User cancelled database refresh');
                     }
                 }
                 
