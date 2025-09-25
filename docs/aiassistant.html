@@ -13,6 +13,48 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4550308871402709" crossorigin="anonymous"></script>
     <!-- Fix navbar overflow for very small screens (320px-423px) -->
     <style>
+        /* Responsive design for mobile and small tablets */
+        @media (max-width: 768px) {
+            .ai-avatar {
+                display: none;
+            }
+
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            #chat-messages {
+                height: 60vh; /* Adjust height for smaller screens */
+                padding: 1rem;
+            }
+            
+            .text-4xl {
+                font-size: 2.25rem; /* 36px */
+            }
+            
+            .text-xl {
+                font-size: 1.125rem; /* 18px */
+            }
+            
+            main .flex.space-x-3 {
+                flex-direction: column;
+            }
+            
+            main .flex.space-x-3 > * + * {
+                margin-top: 0.75rem;
+            }
+            
+            #user-input {
+                padding-right: 4rem; /* Make space for voice button */
+            }
+            
+            #send-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
         @media (max-width: 423px) and (min-width: 320px) {
             /* Force navbar to stay within viewport bounds */
             nav.fixed {
@@ -69,7 +111,8 @@
 
                 <!-- Navigation Links with dropdown menu -->
                 <div id="nav-links" class="hidden md:flex md:space-x-4">
-                    <!-- <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a> -->
+                                        <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+
                     
                     <!-- Past Papers dropdown - Improved version -->
                     <div class="relative group">
@@ -82,7 +125,7 @@
                         <!-- Add padding-top to create an invisible bridge between button and dropdown -->
                         <div class="absolute left-0 hidden group-hover:block pt-2 z-50">
                             <div class="bg-black bg-opacity-80 backdrop-blur-lg p-2 rounded shadow-lg w-40">
-<a href="search.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">Advanced Search</a>
+                                <a href="search.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">Advanced Search</a>
                                 <a href="igcse.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">IGCSE</a>
                                 <a href="comingsoon.html" class="block py-2 px-3 hover:bg-blue-900 hover:text-blue-400 rounded">IAL</a>
                             </div>
@@ -97,7 +140,8 @@
             <!-- Mobile Menu (hidden by default) -->
             <div id="mobile-menu" class="hidden md:hidden mt-4">
                 <div class="flex flex-col space-y-3">
-                    <!-- <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a> -->
+                                        <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+
                     
                     <!-- Mobile Past Papers dropdown -->
                     <div class="mobile-dropdown">
@@ -124,7 +168,8 @@
             <!-- Mobile Menu (hidden by default) -->
             <div id="mobile-menu" class="hidden md:hidden mt-4">
                 <div class="flex flex-col space-y-3">
-                    <!-- <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a> -->
+                                        <a href="aiassistant.html" class="nav-link hover:text-blue-400">AI Tutor</a>
+
                     
                     <!-- Mobile Past Papers dropdown -->
                     <div class="mobile-dropdown">
