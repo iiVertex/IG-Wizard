@@ -5,7 +5,11 @@ module.exports = {
       // Add any other file patterns where you use Tailwind classes
     ],
     theme: {
-      extend: {},
+      extend: {
+        fontFamily: {
+          sans: ['"IBM Plex Sans"', 'sans-serif'],
+        },
+      },
     },
     plugins: [],
     safelist: [{ pattern: /.*/ }],

@@ -13,6 +13,9 @@
     <link rel="preload" href="output.css" as="style">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4550308871402709" crossorigin="anonymous"></script> -->
     <!-- Fix navbar overflow for very small screens (320px-423px) -->
     <style>
@@ -127,74 +130,47 @@
         </div>
     </nav>
 
-    <!-- Updated Space-Themed Hero Section -->
-    <div class="hero relative py-32 bg-black">
-        <!-- Space-themed background elements -->
-        <div class="absolute inset-0 z-0">
-            <!-- Star field background -->
-            <div class="w-full h-full opacity-30" 
-                 style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Cg fill=%22%23FFF%22%3E%3Ccircle cx=%2210%22 cy=%2275%22 r=%221%22/%3E%3Ccircle cx=%2285%22 cy=%2230%22 r=%220.5%22/%3E%3Ccircle cx=%2240%22 cy=%2255%22 r=%220.7%22/%3E%3Ccircle cx=%2260%22 cy=%2220%22 r=%220.8%22/%3E%3Ccircle cx=%2225%22 cy=%228%22 r=%220.4%22/%3E%3Ccircle cx=%2270%22 cy=%2285%22 r=%220.6%22/%3E%3Ccircle cx=%2290%22 cy=%2270%22 r=%220.3%22/%3E%3Ccircle cx=%2215%22 cy=%2230%22 r=%220.5%22/%3E%3Ccircle cx=%2295%22 cy=%225%22 r=%220.2%22/%3E%3Ccircle cx=%2235%22 cy=%2295%22 r=%220.4%22/%3E%3Ccircle cx=%228%22 cy=%2250%22 r=%220.3%22/%3E%3C/g%3E%3C/svg%3E');
-                   background-size: 300px 300px;">
-            </div>
-            
-            <!-- Space nebula effects -->
-            <div class="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-blue-600 filter blur-[120px] opacity-15 animate-pulse-slow"></div>
-            <div class="absolute bottom-1/4 right-1/3 w-96 h-96 rounded-full bg-indigo-800 filter blur-[150px] opacity-10"></div>
-            <div class="absolute top-1/3 right-1/4 w-60 h-60 rounded-full bg-purple-700 filter blur-[100px] opacity-5 animate-pulse-slow"></div>
-        </div>
+    <!-- Hero Section -->
+    <section class="relative bg-slate-900 overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#4f46e5 1px, transparent 1px); background-size: 32px 32px;"></div>
         
-        <!-- Orbital ring decoration -->
-        <div class="absolute inset-0 z-0 overflow-hidden opacity-10">
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-96 border border-blue-400 rounded-full rotate-12"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[130%] h-80 border border-indigo-500 rounded-full -rotate-8"></div>
-        </div>
-        
-        <!-- Content -->
-        <div class="container relative z-10 mx-auto px-6 text-center">
-            <!-- Tag line with space theme -->
-            <div class="inline-block mb-6">
-                <span class="text-xs uppercase tracking-[0.25em] font-medium text-blue-400">Navigate Your Educational Universe</span>
+        <!-- Glow Effect -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-blue-500/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 pt-40 pb-32 relative z-10 text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm font-medium mb-8">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                New: AI Tutor is now live
             </div>
-            
-            <!-- Modern heading with space theme -->
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-white">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">Ace your exams</span> with IG Wizard
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+                Master Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">IGCSE & IAL</span> Exams
             </h1>
-            
-            <!-- Clean description -->
-            <p class="text-gray-300 text-base sm:text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-                Access thousands of past papers, get instant AI tutoring, and study smarter with our comprehensive educational tools.
+
+            <!-- Subheading -->
+            <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Instant access to thousands of past papers and an intelligent AI tutor to help you solve them.
             </p>
-            
-            <!-- Space-themed buttons -->
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="search.html" class="group inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-8 py-3 rounded-md hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 font-medium">
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="search.html" class="inline-flex items-center justify-center px-4 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors duration-200 shadow-lg shadow-blue-500/25">
                     Browse Past Papers
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                    <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                 </a>
-                <a href="aiassistant.html" class="group inline-flex items-center justify-center bg-transparent backdrop-blur-sm border border-indigo-500 border-opacity-50 text-white px-6 py-2 sm:px-8 sm:py-3 rounded-md hover:bg-indigo-900 hover:bg-opacity-20 transition-all duration-300 font-medium">
+                <a href="aiassistant.html" class="inline-flex items-center justify-center px-4 py-3 text-base font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors duration-200">
                     Try AI Tutor
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                    <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                 </a>
-            </div>
-            
-            <!-- Space-themed stats -->
-            <div class="mt-16 grid grid-cols-2 md:grid-cols-2 gap-4 text-center max-w-3xl mx-auto border-t border-indigo-900 pt-10">
-                <div>
-                    <div class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">1K+</div>
-                    <div class="text-blue-300 text-opacity-70 text-sm">Past Papers</div>
-                </div>
-                <div>
-                    <div class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400">24/7</div>
-                    <div class="text-blue-300 text-opacity-70 text-sm">AI Assistance</div>
-                </div>
             </div>
         </div>
-    </div>
+    </section>
 
 
     <!-- Features Section -->
@@ -396,27 +372,5 @@
     </script>
     <script src="script.js" defer></script>
     <!-- Initialize Lenis for smooth scrolling -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize Lenis smooth scrolling
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                smoothTouch: false,
-                touchMultiplier: 2
-            });
-    
-            // Bind lenis smooth scroll to window
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            
-            requestAnimationFrame(raf);
-        });
-    </script>
 </body>
 </html>

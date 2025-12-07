@@ -298,10 +298,7 @@
                     </button>
                 </div>
                 <div class="flex items-center">
-                    <label class="flex items-center cursor-pointer hidden">
-                        <input type="checkbox" id="group-by-subject" class="mr-2">
-                        <span class="text-sm text-gray-300">Group by subject</span>
-                    </label>
+                    <!-- Group by subject removed -->
                 </div>
             </div>
         </div>
@@ -411,7 +408,7 @@
                 const resultsStats = document.getElementById('results-stats');
                 const resultCount = document.getElementById('result-count');
                 const resultTime = document.getElementById('result-time');
-                const groupBySubject = document.getElementById('group-by-subject');
+                // Group by subject removed
                 const databaseStatus = document.getElementById('database-status');
                 const accountingAlert = document.getElementById('accounting-alert');
                 const dismissAccountingAlert = document.getElementById('dismiss-accounting-alert');
@@ -441,7 +438,7 @@
                 filterVariant.addEventListener('change', searchPapers);
                 filterSession.addEventListener('change', searchPapers);
                 filterExamBoard.addEventListener('change', searchPapers);
-                groupBySubject.addEventListener('change', searchPapers);
+                // Group by subject listener removed
                 
                 clearFiltersBtn.addEventListener('click', clearFilters);
                 refreshDbBtn.addEventListener('click', refreshDatabase);
@@ -498,7 +495,7 @@
                     const variantFilter = filterVariant.value;
                     const sessionFilter = filterSession.value;
                     const examBoardFilter = filterExamBoard.value;
-                    const groupResults = groupBySubject.checked;
+                    // Group by subject removed
                     
                     // Apply filters
                     let filteredPapers = papers.filter(paper => {
@@ -562,46 +559,10 @@
                         return;
                     }
                     
-                    // Group by subject if requested
-                    if (groupResults) {
-                        const subjectGroups = {};
-                        filteredPapers.forEach(paper => {
-                            if (!subjectGroups[paper.subject]) {
-                                subjectGroups[paper.subject] = [];
-                            }
-                            subjectGroups[paper.subject].push(paper);
-                        });
-                        
-                        // Create a container for the results
-                        const resultsContainer = document.createElement('div');
-                        resultsContainer.className = 'w-full';
-                        
-                        // Display each subject group
-                        Object.keys(subjectGroups).sort().forEach(subject => {
-                            // Subject header
-                            const subjectHeader = document.createElement('h2');
-                            subjectHeader.className = 'text-xl font-bold mt-6 mb-3 text-blue-400';
-                            subjectHeader.textContent = subject;
-                            resultsContainer.appendChild(subjectHeader);
-                            
-                            // Papers for this subject
-                            const paperGrid = document.createElement('div');
-                            paperGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6';
-                            
-                            subjectGroups[subject].forEach(paper => {
-                                paperGrid.appendChild(createPaperCard(paper));
-                            });
-                            
-                            resultsContainer.appendChild(paperGrid);
-                        });
-                        
-                        searchResults.appendChild(resultsContainer);
-                    } else {
-                        // Regular display without grouping
-                        filteredPapers.forEach(paper => {
-                            searchResults.appendChild(createPaperCard(paper));
-                        });
-                    }
+                    // Regular display without grouping
+                    filteredPapers.forEach(paper => {
+                        searchResults.appendChild(createPaperCard(paper));
+                    });
                 }
                 
                 // Create a card for a paper
@@ -715,7 +676,7 @@
                     }
                     
                     link.href = href;
-                    link.className = `px-3 py-1 rounded border ${className} border-current hover:bg-opacity-20 hover:bg-current transition-colors`;
+                    link.className = `px-3 py-1 rounded border ${className} border-current hover:bg-gray-800 transition-colors`;
                     link.textContent = text;
                     link.target = '_blank';
                     return link;
@@ -730,7 +691,7 @@
                     filterVariant.value = '';
                     filterSession.value = '';
                     filterExamBoard.value = '';
-                    groupBySubject.checked = false;
+                    // Group by subject reset removed
                     searchPapers();
                 }
                 
