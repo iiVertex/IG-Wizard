@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "build": "tailwindcss -i ./src/input.css -o ./src/output.css"
+    "build": "tailwindcss -i ./src/input.css -o ./docs/output.css"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.15",
