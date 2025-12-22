@@ -351,6 +351,10 @@
                     })
                 });
 
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
                 const data = await response.json();
                 chatMessages.removeChild(loadingDiv);
                 addMessageToChat('assistant', data.choices[0].message.content);
