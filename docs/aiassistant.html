@@ -352,8 +352,14 @@
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    console.error('API Error Details:', errorData);
+                    const contentType = response.headers.get("content-type");
+                    let errorDetails;
+                    if (contentType && contentType.indexOf("application/json") !== -1) {
+                        errorDetails = await response.json().catch(() => ({}));
+                    } else {
+                        errorDetails = await response.text();
+                    }
+                    console.error('API Error Details:', errorDetails);
                     throw new Error(`API request failed with status ${response.status}`);
                 }
 
