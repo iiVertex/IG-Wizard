@@ -5,27 +5,32 @@ require('dotenv').config();
 const app = express();
 const PORT = 3000;
 
+// Middleware to parse JSON bodies
 app.use(express.json());
 
 // Serve static files from 'docs' folder
 app.use(express.static(path.join(__dirname, 'docs')));
 
-// Also serve the root files if needed (like images if they are referenced relatively)
-// But based on workspace, images are in docs/images.
-// The HTML references ./images/logo.png, so serving docs as root is correct.
-
-// API endpoint
+// API endpoint for chat
 app.post('/api/chat', async (req, res) => {
+    console.log('Received request to /api/chat');
+    
     const apiKey = process.env.MISTRAL_API_KEY;
     
     if (!apiKey) {
         console.error('API Key missing in .env');
-        return res.status(500).json({ error: 'API key not configured' });
+        return res.status(500).json({ error: 'API key not configured on server' });
     }
 
     try {
         const { messages } = req.body;
-        console.log('Sending request to Mistral...');
+        
+        if (!messages || !Array.isArray(messages)) {
+            console.error('Invalid messages format');
+            return res.status(400).json({ error: 'Invalid messages format' });
+        }
+
+        console.log('Sending request to Mistral API...');
 
         const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
             method: 'POST',
@@ -46,15 +51,16 @@ app.post('/api/chat', async (req, res) => {
             return res.status(response.status).json(data);
         }
 
-        console.log('Success!');
+        console.log('Mistral API Success');
         res.json(data);
     } catch (error) {
-        console.error('Proxy Error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Server Error:', error);
+        res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 });
 
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
-    console.log(`Open http://localhost:${PORT}/aiassistant.html to test`);
+    console.log(`Test the AI Assistant at http://localhost:${PORT}/aiassistant.html`);
 });
