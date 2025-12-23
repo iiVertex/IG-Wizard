@@ -10,6 +10,9 @@
     "start": "node server.js",
     "build": "tailwindcss -i ./src/input.css -o ./docs/output.css"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.15",
     "@vercel/analytics": "^1.5.0",

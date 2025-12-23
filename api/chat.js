@@ -1,6 +1,11 @@
 module.exports = async function handler(req, res) {
   console.log('Vercel Function: Received request to /api/chat');
 
+  // Allow GET requests for health check
+  if (req.method === 'GET') {
+    return res.status(200).json({ status: 'API is working', message: 'Send a POST request to chat' });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
