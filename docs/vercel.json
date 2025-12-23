@@ -1,5 +1,6 @@
 {
-  "buildCommand": "",
+  "buildCommand": "echo 'No build needed'",
+  "installCommand": "echo 'No install needed'",
   "functions": {
     "api/*.js": {
       "runtime": "nodejs18.x"
