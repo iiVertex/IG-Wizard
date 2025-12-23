@@ -1,7 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/:match*", "destination": "/api/:match*" },
-    { "source": "/", "destination": "/docs/index.html" },
-    { "source": "/:match*", "destination": "/docs/:match*" }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/((?!api/).*)", "destination": "/docs/$1" }
   ]
 }

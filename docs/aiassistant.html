@@ -352,6 +352,8 @@
                 });
 
                 if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('API Error Details:', errorData);
                     throw new Error(`API request failed with status ${response.status}`);
                 }
 
@@ -360,8 +362,11 @@
                 addMessageToChat('assistant', data.choices[0].message.content);
             } catch (error) {
                 console.error('Error:', error);
-                chatMessages.removeChild(chatMessages.lastChild);
-                addMessageToChat('assistant', 'Sorry, I encountered an error. Please try again.');
+                const loadingIndicator = document.getElementById('loading-indicator');
+                if (loadingIndicator) {
+                    chatMessages.removeChild(loadingIndicator);
+                }
+                addMessageToChat('assistant', `Sorry, I encountered an error (${error.message}). Please try again.`);
             }
         }
 
