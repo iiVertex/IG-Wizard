@@ -1,7 +1,8 @@
 {
+  "outputDirectory": "docs",
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
     { "source": "/api/test", "destination": "/api/test" },
-    { "source": "/((?!api/).*)", "destination": "/docs/$1" }
+    { "source": "/((?!api/).*)", "destination": "/$1" }
   ]
 }
