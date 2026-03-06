@@ -1,7 +1,5 @@
 {
   "outputDirectory": "docs",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/$1" }
-  ],
-  "buildCommand": ""
+  "installCommand": "echo skip",
+  "buildCommand": "echo skip"
 }
