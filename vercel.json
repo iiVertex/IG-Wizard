@@ -1,6 +1,6 @@
 {
-  "framework": null,
+  "version": 2,
+  "buildCommand": "echo done",
   "outputDirectory": "docs",
-  "installCommand": "echo skip",
-  "buildCommand": "echo skip"
+  "installCommand": "echo done"
 }
