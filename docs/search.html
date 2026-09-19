@@ -191,21 +191,6 @@
         
         
         
-        <!-- New Accounting Papers Added Alert - Muted Blue Theme -->
-        <div id="accounting-alert" class="relative bg-slate-800 bg-opacity-60 border border-slate-600 text-slate-200 px-3 py-2 rounded-lg mb-4 shadow-sm backdrop-blur-sm hover:bg-opacity-70 max-w-2xl mx-auto text-center" style="width: 60%;">
-            <div class="flex items-center justify-between">
-                <div class="flex-1">
-                    <p class="font-medium text-slate-100 text-sm">Cambridge IGCSE Accounting Past Papers Added! Refresh the Database to load them.</p>
-                </div>
-                <div class="ml-3">
-                    <button id="dismiss-accounting-alert" type="button" class="text-slate-400 hover:text-slate-200 focus:outline-none cursor-pointer" aria-label="Dismiss" onclick="dismissAlert()">
-                        <span class="sr-only">Dismiss</span>
-                        ✕
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div id="database-status" class="mb-8 text-center m-auto"></div>
         
         <div class="card p-6 rounded-lg mb-8">
@@ -343,27 +328,7 @@
 
     <script src="paper-search.js"></script>
     <script>
-        // Simple dismiss function for the accounting alert
-        function dismissAlert() {
-            const accountingAlert = document.getElementById('accounting-alert');
-            if (accountingAlert) {
-                accountingAlert.style.display = 'none';
-                localStorage.setItem('accounting-alert-dismissed', 'true');
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if accounting alert was previously dismissed
-            if (localStorage.getItem('accounting-alert-dismissed') === 'true') {
-                const accountingAlert = document.getElementById('accounting-alert');
-                if (accountingAlert) {
-                    accountingAlert.style.display = 'none';
-                }
-            }
-            
-            // For debugging: To reset the alert, uncomment the line below and reload the page
-            localStorage.removeItem('accounting-alert-dismissed');
-            
             // Mobile menu toggle
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -402,9 +367,7 @@
                 const resultTime = document.getElementById('result-time');
                 // Group by subject removed
                 const databaseStatus = document.getElementById('database-status');
-                const accountingAlert = document.getElementById('accounting-alert');
-                const dismissAccountingAlert = document.getElementById('dismiss-accounting-alert');
-                
+
                 // Check database status
                 const papers = JSON.parse(localStorage.getItem('paperDatabase')) || [];
                 const lastUpdate = localStorage.getItem('paperDbLastUpdate');
@@ -747,7 +710,6 @@
                         console.log('Clearing existing database...');
                         localStorage.removeItem('paperDatabase');
                         localStorage.removeItem('paperDbLastUpdate');
-                        localStorage.removeItem('accounting-alert-dismissed'); // Reset alert too
                         console.log('Starting fresh database build...');
                         buildDatabase();
                     } else {

@@ -19,6 +19,32 @@
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4550308871402709" crossorigin="anonymous"></script> -->
     <!-- Fix navbar overflow for very small screens (320px-423px) -->
     <style>
+        /* Slanted white frame around the highlighted hero words */
+        .hero-highlight {
+            position: relative;
+            display: inline-block;
+            padding: 0.04em 0.22em;
+            margin: 0 0.06em;
+            isolation: isolate;
+        }
+
+        .hero-highlight::before {
+            content: "";
+            position: absolute;
+            inset: -0.04em -0.02em;
+            background: #ffffff;
+            border-radius: 8px;
+            transform: rotate(-1.25deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @media (max-width: 767px) {
+            .hero-highlight::before {
+                border-radius: 6px;
+            }
+        }
+
         @media (max-width: 423px) and (min-width: 320px) {
             /* Force navbar to stay within viewport bounds */
             nav.fixed {
@@ -144,7 +170,7 @@
 
             <!-- Main Heading -->
             <h1 class="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight leading-tight">
-                Master Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">IGCSE & IAL</span> Exams
+                Master Your <span class="hero-highlight"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">IGCSE & IAL</span></span> Exams
             </h1>
 
             <!-- Subheading -->
