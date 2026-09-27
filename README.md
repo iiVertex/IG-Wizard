@@ -2,7 +2,7 @@
 
 IG-Wizard is an all-in-one study companion for IGCSE & IAL students. It combines a searchable past-papers library with an AI-powered tutor to help learners prepare more efficiently and understand difficult concepts faster.
 
-🔗 Live site: https://www.igwizard.tech/
+🔗 Live site: https://ig-wizard.vercel.app/
 
 ---
 
